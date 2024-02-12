@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JWL Guide</title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="../media/favicon.ico" />
+    <link type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed%7CVarela"
+      rel="stylesheet" />
+    <style type="text/css">
+html, body, h1, h2, h3, p, div, li {
+	margin: 0;
+	padding: 0;
+}
+body {
+	padding: 1em;
+	font-family: "Helvetica", Helvetica, sans-serif;
+	font-size: 13px;
+	color: #1c1c1c;
+	background-color: #f3f3f3;
+}
+div.section {
+	margin: 1.5em 0;
+}
+div.section-2 {
+	margin: 1em 0;
+}
+div.section-3 {
+	margin: 0.5em 0;
+}
+.section ul {
+	margin-top: 0;
+	margin-bottom: 0;
+	line-height: 1.2em;
+}
+#content {
+	max-width: 960px;
+	margin: 0 auto;
+}
+pre {
+	max-width: 910px;
+	max-height: 430px;
+	overflow: auto;
+}
+#logo {
+	height: 200px;
+}
+#logo-left {
+	padding: 60px 10px 0 10px;
+	float: left;
+}
+#logo-right {
+	padding: 60px 0 0 20px;
+	float: left;
+}
+logo-clear {
+	clear: both;
+}
+h1 {
+	font-family: "Roboto Condensed", Arial, sans-serif;
+	font-size: 60px;
+}
+</style>
+<script type="text/javascript" src="../lib/jul/jul.js?v=1.6.8"></script>
+<script type="text/javascript" src="../lib/jwl/jwl.js?v=0.8.7"></script>
+	<script type="text/javascript" src="../js/projects/JWL.components.playerbar.js?v=0.8.7"></script>
+	<script type="text/javascript" src="../js/projects/JWL.components.jsonoptions.js?v=0.8.7"></script>
+	<script type="text/javascript" src="../js/projects/JWL.components.frameplayer.js?v=0.8.7"></script>
+	<script type="text/javascript" src="../tests/custom.js?v=0.8.7"></script>
+	<script type="text/javascript" src="../tests/wrapper.js?v=0.8.7"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div id="top" class="section">
+        <div id="logo">
+          <div id="logo-left"> <img alt="JWL"
+              src="../media/jwl144.png" width="220" height="144" /> </div>
+          <div id="logo-right">
+            <h1>JWL</h1>
+            <p>Version 0.8.7</p>
+            <p>Copyright © 2016 - 2020 <a target="_blank"
+href="http://www.google.com/search?hl=en&amp;num=50&amp;start=0&amp;safe=0&amp;filter=0&amp;nfpr=1&amp;q=The+Zonebuilder+web+development+programming+IT+society+philosophy+politics">
+                The Zonebuilder</a></p>
+          </div>
+        </div>
+      </div>
+      <div id="toc" class="section">
+        <h2>Table of contents</h2>
+        <ul>
+          <li><a href="#about">About JWL</a>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#requirements">System requirements</a></li>
+              <li><a href="#install">Installation</a></li>
+            </ul>
+          </li>
+          <li><a href="#creating-component">How to build a JWL component</a></li>
+          <li><a href="#saving-components">Saving and loading components</a></li>
+          <li><a href="#phases">Pre-create and post-create phases</a></li>
+          <li><a href="#html-components">JWL and HTML5 web components</a></li>
+          <li><a href="#more-creating">More about creating a JWL component</a></li>
+          <li><a href="#three-ways">Three ways of using the JWL components</a></li>
+          <li><a href="#todo">TODO</a></li>
+        </ul>
+      </div>
+      <div id="about" class="section">
+        <h2>About JWL</h2>
+        <p>The JavaScript Widget Library (JWL) is a tool that allows you 
+		to build modern web applications by providing a simple way to create HTML components.<br />
+		JWL is based on <a target="_blank" href="http://sourceforge.net/projects/jul-javascript/">JUL - The JavaScript UI Language module</a> 
+		and it easily integrates with <a target="_blank" href="http://sourceforge.net/projects/jul-designer/">JUL Designer</a>.
+		</p>
+        <div id="features" class="section-2">
+          <h3>Features</h3>
+          <ul>
+		    <li>creating HTML components from configuration objects</li>
+			<li>structural composition of the layout and the interface behavior with cascading element listeners</li>
+			<li>configuration and component inheritance</li>
+			<li>registering the components as HTML5 custom elements in supported browsers</li>
+			<li>two-way, fully recursive element wrappers for all browsers</li>
+          </ul>
+        </div>
+        <div id="requirements" class="section-2">
+          <h3>System requirements</h3>
+          <p>Compatible with all major browsers including: FF4+, Chrome 5+, IE9+, Edge, Opera 11+, Safari 5+ 
+          </p>
+        </div>
+        <div id="install" class="section-2">
+          <h3>Installation</h3>
+          <p>Unpack the distribution archive to a directory of your web site and navigate to it using a web browser. 
+		  The library is inside 'lib' subdirectory. Include 'jul.js' + 'jwl.js' into your web page before creating/using 
+		  your JWL components. 
+		  </p>
+        </div>
+        <div><a class="to-top" href="#top">Back to top</a></div>
+      </div>
+      <div id="creating-component" class="section">
+        <h2>How to build a JWL component</h2>
+        <p>Building a JWL component is an easy process, either if you 
+		write the code directly or, even better, if you use JUL Designer 
+		to generate it. Here are the steps:
+		</p>
+		<ol>
+		  <li>Write a configuration object for the root component. This should have 
+		  at least a tag property and a binding ID property.  The tag should be 
+		  an existing HTML tag, and the binding should be a string starting 
+		  with a dot. This string is referred as the component class.</li>
+		  <li>Add a children array to the root config containing other configuration objects. 
+		  These nay have binding IDs and should have at least a tag property. 
+		  This tag can be a HTML tag or a JWL component name.</li>
+		  <li>Create a separate object for the interface logic (behavior). 
+		  This should have properties with the dame name as the binding IDs 
+		  defined in the configuration tree. Each property is an object whose values 
+		  are applied over the corresponding object in the config tree.</li>
+		  <li>For each object in the logic configuration you may add properties like ‘data-&lt;item&gt;’. 
+		  Here you must also add the element listeners if present. Add a 'listeners' 
+		  object with properties set to event names and values set to your custom 
+		  event handlers (listeners).</li>
+		  <li>You can use the newly created component with JWL.parser in a page generated by JUL, 
+		  or you can register it as a custom HTML element with JWL.register(), depending on browser support.</li>
+		</ol>
+		<pre id="show-playerbar"></pre>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+      <div id="saving-components" class="section">
+        <h2>Saving and loading components</h2>
+        <p>One or more JWL components can be serialized into JSON with JWL.save() 
+		and can be loaded from the serialized form with JWL.load().
+        </p>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+      <div id="phases" class="section">
+      <h2>Pre-create and post-create phases</h2>
+      <p>The JWL parser uses a custom factory that receives a resulting configuration object 
+	  used to instantiate a component. You can inspect and affect he direct members of this config object 
+	  with the pre-create callback {Component}.preCreate(). Also, you can do post-processing 
+	  of the instantiated component with {Component}.postCreate() callback.
+	  </p>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+      <div id="html-components" class="section">
+      <h2>JWL and HTML5 web components</h2>
+      <p>Any JWL component can be register as a HTML5 custom element with JWL.register(). 
+	  This allows using the component directly in the markup of the page. 
+	  The component config can be attached with two additional properties: 
+	  ‘prototype’ that specifies members to be added to the custom element prototype, 
+	  and ‘css’ which is an inline style of an array of URL paths of external styles 
+	  to apply to the component. The external styles are loaded with XMLHttpRequest, 
+	  so you should put them in the same domain as the web page.
+	  </p>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+<div id="more-creating" class="section">
+      <h2>More about creating a JWL component</h2>
+      <p>A component consists of two parts: the layout configuration (UI) 
+	  and the component behavior (interface logic). They are the ‘ui’ and ‘logic’ properties 
+	  of the component configuration object.<br />
+	  The ‘ui’ property is a tree of configuration objects of the component and its descendants. 
+	  The ‘logic’ property is a mapping between UI nodes binding IDs and object containing 
+	  their logic configuration. The ‘logic’ part also has the 'listeners' configuration 
+	  for each UI node. The listeners of each UI node are applied in cascade (as required 
+	  for a HTML element). The other members of the ‘logic’ config override the members 
+	  with the same key of their UI node.<br />
+	  Other members of the component config are ‘prototype’ which contains properties and methods 
+	  that should apply to the prototype of the HTML element, and ‘css’ which is 
+	  an array of CSS descriptors for a custom HTML  element. See the next chapter for more explanations.<br />
+	  The component key/index in JWL.components should be a lower case tag-like string. If the component 
+	  is outside HTML namespace, the key should be prefixed with the namespace prefix and a colon 
+	  (e.g. svg:logo).
+      </p>
+      <pre id="show-frameplayer"></pre>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+<div id="three-ways" class="section">
+      <h2>Three ways of using the JWL components</h2>
+      <ol>
+        <li>Use the JWL parser to instantiate a configuration tree of HTML elements. 
+		When the parser encounters a JWL component, it automatically adds extra processing for it, 
+		The process flows as follows:
+		<ul>
+		  <li>call the component preCreate method allowing inspecting or modifying the current configuration</li>
+		  <li>distribute the dotted attributes of the form ‘subcomponent.attribte’ to the corresponding subcomponent</li>
+		  <li>create the component and recursively process its corresponding subcomponent tree</li>
+		  <li>call the component postCreate method allowing to attach behavior to the component instance</li>
+		</ul>
+		<pre id="show-test-frameplayer"></pre>
+	</li>
+	<li>Use the JWL register method to register a custom HTML element as ‘jwl-componentname’ tag. 
+	This has the advantage of adding custom members to the element’s prototype. 
+	These members are stored in the ‘prototype’ property of the component configuration. 
+	The configuration may also have a ‘css’ property which is an array of CSS descriptor. 
+	In the simplest form, a descriptor is a string containing an inline style but it can also contain a local domain path 
+	to an external CSS. The full descriptor is an object with two properties: ‘style’ and ‘media’.
+	<pre id="show-test-custom"></pre>
+	</li>
+	<li>Use JWL.factory() callback to create components that are not HTML elements but mimic the element’s behavior 
+	as close as possible. The component instance exposes the standard properties and methods 
+	of a HTML element augmented with the members of the ‘prototype’ property of the component configuration. 
+	The exposed members operate directly on the wrapped HTML element, but also accept arguments that 
+	are component instances.<br />
+	This approach is useful when the browser lacks support for custom elements (web components), 
+	but it is also provided as a way of wrapping the DOM owned elements into user-space objects.
+	<pre id="show-test-wrapper"></pre>
+	</li>
+      </ol>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+<div id="todo" class="section">
+      <h2>TODO</h2>
+      <ul>
+        <li>create a standard set o desktop-like browser widgets based on JWL</li>
+		<li>create a standard set of mobile-like browser widgets based on JWL</li>
+		<li>create a standard hierarchy of abstract widget classes whose implementations target 
+		various JavaScript event-driven renderers (e.g. browser, mobile, embedded app)</li>
+	  </ul>
+      <div><a class="to-top" href="#top">Back to top</a></div>
+    </div>
+   </div>
+   <script type="text/javascript">
+   document.getElementById('show-playerbar').innerHTML = "// add component namespace\nJUL.ns('JWL.components.playerbar');\n" +
+   	"// create component UI & interface logic\nJUL.apply(JWL.components.playerbar, " +
+	   JUL.UI.obj2str({ui: JWL.components.playerbar.ui, logic: JWL.components.playerbar.logic}) + ");\n";
+   document.getElementById('show-frameplayer').innerHTML = "// add component namespace\nJUL.ns('JWL.components.frameplayer');\n" +
+   	"// append required fields for a full component\nJUL.apply(JWL.components.frameplayer, " +
+	   JUL.UI.obj2str({ui: JWL.components.frameplayer.ui, logic: JWL.components.frameplayer.logic,
+	   preCreate: JWL.components.frameplayer.preCreate, postCreate: null,
+	   prototype: JWL.components.frameplayer.prototype, css: JWL.components.frameplayer.css}) + ");\n";
+   document.getElementById('show-test-frameplayer').innerHTML = "JWL.components.frameplayer.init = " +
+   	JUL.UI.obj2str(JWL.components.frameplayer.init).replace(/\s*JWL\.parser\._keep(\s|\S)+?;/, '') + ";\n";
+   document.getElementById('show-test-custom').innerHTML = " // parser self-registers custom elements\nJWL.tests.custom.parserConfig = " +
+   	JUL.UI.obj2str(JWL.tests.custom.parserConfig) + ";\nJWL.tests.custom.init = " +
+	   JUL.UI.obj2str(JWL.tests.custom.init) + ";\n";
+   document.getElementById('show-test-wrapper').innerHTML = " // no registering needed\nJWL.tests.wrapper.parserConfig = " +
+   	JUL.UI.obj2str(JWL.tests.wrapper.parserConfig) + ";\nJWL.tests.wrapper.init = " +
+	   JUL.UI.obj2str(JWL.tests.wrapper.init) + ";\n";
+   </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+ === JWL - The JavaScript Widget Library ===
+
+ = About = 
+
+The JavaScript Widget Library (JWL) is a tool that allows you to build modern 
+web applications by providing a simple way to create HTML components.
+ JWL is based on JUL - The JavaScript UI Language module and it easily integrates with JUL Designer. 
+
+ = License =
+ 
+ Licensed under GNU GPLv2 or later and under GNU LGPLv3 or later. See enclosed 'licenses' folder.
+ 
+ = Browser support =
+
+Compatible with all major browsers including: FF4+, Chrome 5+, IE9+, Edge, Opera 11+, Safari 5+
+
+ = Features =
+ 
+  * creating HTML components from configuration objects 
+  * structural composition of the layout and the interface behavior with cascading element listeners 
+  * configuration and component inheritance 
+  * registering the components as HTML5 custom elements in supported browsers 
+  * two-way, fully recursive element wrappers for all browsers 
+
+ = Installation =
+
+  * Extract this archive in a directory on your web server (JWL directory).
+  * Navigate with your web browser to JUL directory.
+
+ = Support =
+
+Project site: http://sourceforge.net/projects/jwl-library/

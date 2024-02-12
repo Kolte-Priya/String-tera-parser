@@ -1,0 +1,124 @@
+<html>
+	<head>
+		<title>
+			Search Interface
+		</title>
+		
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: left;
+            align-items: left; 
+            margin: 0;
+            background-color:rosybrown;
+           }
+        </style>
+	
+	</head>
+	<body>
+		<div>
+			<label><h2>Enter Search String</h2></label>
+			<input type="text" id="inputdata" placeholder="enter string" />
+			<br>
+			<button onclick="sendTerm()">Search</button>
+			
+		</div>
+		<br>
+		<br>
+		<div id="resultContainer"></div>
+			
+        <script>
+			function sendTerm()
+			{
+				var inputTerm=document.getElementById('inputdata').value;
+				fetch('http://localhost:8090/api/data', {
+                method: 'POST',
+                body:inputTerm,
+            })
+           .then(response => response.json())
+            .then(data =>displayObject(data,"resultContainer"))
+            
+            .catch(error => console.error('Error:', error));
+        
+			}
+			
+			function display2(result,containerId)
+			{
+				  	const container = document.getElementById(containerId);
+				  	container.innerHTML='';
+ 				  	result.forEach(subarray => {
+    			  		const ul = document.createElement('ul');
+	   					subarray.forEach((item,index) => {
+      					
+      					const li = document.createElement('li');
+      					//making first element in the list as strong
+						if (index === 0) {
+                			const boldElement = document.createElement('strong');
+                			boldElement.textContent = item;
+                			li.appendChild(boldElement);
+            			} else {
+                			li.textContent = item;
+            			}
+            			 ul.appendChild(li);
+    				});
+	    			container.appendChild(ul);
+	    			console.log(ul);
+      			});
+      			console.log(result);
+			}
+			
+	 function displayResult(result, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        const ul = document.createElement('ul');
+
+        result.forEach(item => {
+            const li = document.createElement('li');
+
+            // Check if item is an array (subarray)
+            if (Array.isArray(item)) {
+                // Treat the first element as the name and the rest as values
+                const name = item[0];
+                const values = item.slice(1);
+
+                const boldElement = document.createElement('strong');
+                boldElement.textContent = name;
+                li.appendChild(boldElement);
+
+                // Add the values as list items
+                const valuesUl = document.createElement('ul');
+                values.forEach(value => {
+                    const valueLi = document.createElement('li');
+                    valueLi.textContent = value;
+                    valuesUl.appendChild(valueLi);
+                });
+
+                li.appendChild(valuesUl);
+            } else {
+                // If item is not an array, just add it as a regular list item
+                li.textContent = item;
+            }
+
+            ul.appendChild(li);
+        });
+		
+        container.appendChild(ul);
+    }
+    //display of array of objects
+    function displayObject(data, containerId) {
+        var resultContainer = document.getElementById(containerId);
+        resultContainer.innerHTML = "";  // Clear previous content
+
+        data.forEach(obj => {
+            var item = document.createElement('div');
+            item.innerHTML = "<b>Name:</b> " + obj.keyword+"<br>";
+            item.innerHTML +=  " <b>Value:</b> " +obj.relatedWords;
+            resultContainer.appendChild(item);
+        });
+    }
+		</script>
+	</body>
+</html>

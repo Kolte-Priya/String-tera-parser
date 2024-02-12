@@ -1,0 +1,41 @@
+</head>
+<body>
+    <label for="textInput">Enter Text:</label>
+    <input type="text" id="textInput" />
+    <button onclick="submitData()" type="submit">Submit</button>
+
+    <div id="resultContainer">
+        <!-- Result will be displayed here -->
+    </div>
+
+    <script>
+        function submitData() {
+            var inputData = document.getElementById("textInput").value;
+			console.log("inside submit data");
+            // Make a Fetch API request to the Java API
+            fetch("http://localhost:8090/api/parseTerm", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify({ text: inputData })
+            })
+            .then(response => response.json())
+            .then(data => displayResult(data))
+            .catch(error => console.error("Error:", error));
+        }
+
+        function displayResult(result) {
+            var resultContainer = document.getElementById("resultContainer");
+            resultContainer.innerHTML = "<p>Result:</p><ul>";
+
+            // Assuming the result is an array of words
+            result.forEach(function(word) {
+                resultContainer.innerHTML += "<li>" + word + "</li>";
+            });
+
+            resultContainer.innerHTML += "</ul>";
+        }
+    </script>
+</body>
+</html>

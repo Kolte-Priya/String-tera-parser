@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JWL Components</title>
+<link rel="stylesheet" type="text/css" href="lib/faws/css/font-awesome.min.css?v=0.8.7" />
+<link rel="stylesheet" type="text/css" href="lib/jwl/css/playerbar.css?v=0.8.7" />
+<link rel="stylesheet" type="text/css" href="lib/jwl/css/jsonoptions.css?v=0.8.7" />
+<link rel="stylesheet" type="text/css" href="lib/jwl/css/frameplayer.css?v=0.8.7" />
+<style type="text/css">
+body {
+	font-family: helvetica, sans-serif;
+	font-size: 13px;
+	color: #111;
+	background-color: #f2f2f2;
+}
+pre {
+	margin: 0;
+	padding: 0;
+	max-width: 430px;
+	max-height: 300px;
+	overflow: auto;
+}
+#content {
+	width: 880px;
+	margin: 0 auto;
+}
+#list {
+	border-collapse: separate;
+	border-spacing: 15px 0;
+}
+#copy {
+	font-size: small;
+	text-align: center;
+}
+</style>
+<script type="text/javascript">
+if (!window.customElements || typeof window.customElements.define !== 'function') {
+	document.write('<' + 'script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents.min.js">' + '<' + '/script>');
+}
+</script>
+<script type="text/javascript" src="lib/jul/jul.js?v=1.6.8"></script>
+<script type="text/javascript" src="lib/jwl/jwl.js?v=0.8.7"></script>
+	<script type="text/javascript" src="tests/custom.js?v=0.8.7"></script>
+	<script type="text/javascript" src="tests/wrapper.js?v=0.8.7"></script>
+</head>
+<body>
+<div id="content">
+<h1>JWL Components Demo</h1>
+<p>These are two ways of using JWL components: with custom HTML elements (web components W3C standard),
+or with element wrappers. The element wrappers expose the standard DOM properties and methods of the element,
+but can augment them the same way as the custom elements do.
+</p>
+<p>The required code for both use cases is pretty similar, as you can see below.
+</p>
+<table id="list">
+<tbody>
+<tr>
+<td><h3>JWL + Custom elements</h3></td>
+<td><h3>JWL + JWL.makeClass()</h3></td>
+</tr>
+<tr>
+<td id="custom-player"></td>
+<td id="class-player"></td>
+</tr>
+<tr>
+<td><h3>Parser configuration</h3></td>
+<td><h3>Parser configuration</h3></td>
+</tr>
+<tr>
+<td><pre id="custom-parser"></pre></td>
+<td><pre id="class-parser"></pre></td>
+</tr>
+<tr>
+<td><h3>Interface configuration</h3></td>
+<td><h3>Interface configuration</h3></td>
+</tr>
+<tr>
+<td><pre id="custom-interface"></pre></td>
+<td><pre id="class-interface"></pre></td>
+</tr>
+<tr>
+<td><h3>Component creation</h3></td>
+<td><h3>Component creation</h3></td>
+</tr>
+<tr>
+<td><pre id="custom-component"></pre></td>
+<td><pre id="class-component"></pre></td>
+</tr>
+</tbody>
+</table>
+<p id="copy">Copyright &copy; 2016 - 2020 <a target="_blank" href="http://www.google.com/search?hl=en&num=50&start=0&safe=0&filter=0&nfpr=1&q=The+Zonebuilder+web+development+programming+IT+society+philosophy+politics">The Zonebuilder</a>
+</div>
+<script type="text/javascript">
+document.getElementById('custom-parser').innerHTML = 'JWL.tests.custom.parserConfig = ' +
+	JUL.UI.obj2str(JWL.tests.custom.parserConfig) + ';\n';
+document.getElementById('class-parser').innerHTML = 'JWL.tests.wrapper.parserConfig = ' +
+	JUL.UI.obj2str(JWL.tests.wrapper.parserConfig) + ';\n';
+document.getElementById('custom-interface').innerHTML = 'JWL.tests.custom.ui = ' +
+	JUL.UI.obj2str(JWL.tests.custom.ui) + ';\n\n' +
+	'JWL.tests.custom.logic = ' + JUL.UI.obj2str(JWL.tests.custom.logic) + ';\n';
+document.getElementById('class-interface').innerHTML = 'JWL.tests.wrapper.ui = ' +
+	JUL.UI.obj2str(JWL.tests.wrapper.ui) + ';\n\n' +
+	'JWL.tests.wrapper.logic = ' + JUL.UI.obj2str(JWL.tests.wrapper.logic) + ';\n';
+document.getElementById('custom-component').innerHTML = " // parser self-regusters custom elements \n" +
+	"var oParser = new JWL.Parser(JWL.tests.custom.parserConfig);\n" +
+	"oParser.create(JWL.tests.custom.ui, JWL.tests.custom.logic, document.body);\n";
+document.getElementById('class-component').innerHTML = "// no registering needed \n" +
+	"var oParser = new JWL.Parser(JWL.tests.wrapper.parserConfig);\n" +
+	"oParser.create(JWL.tests.wrapper.ui, JWL.tests.wrapper.logic, document.body);\n";
+APP = {
+	customParser: new JWL.Parser(JWL.tests.custom.parserConfig),
+	classParser: new JWL.Parser(JWL.tests.wrapper.parserConfig)
+};
+try {
+	APP.customParser.create(JWL.tests.custom.ui, JWL.tests.custom.logic, document.getElementById('custom-player'));
+}
+catch (e) {
+	document.getElementById('custom-player').innerHTML = 'This browser doesn\'t support custom HTML elements.';
+}
+APP.classParser.create(JWL.tests.wrapper.ui, JWL.tests.wrapper.logic, document.getElementById('class-player'));
+</script>
+</body>
+</html>
